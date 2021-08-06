@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart System</title>
+  <link rel="icon" href="SIS.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet " type="text/css" href="style.css">
+</head>
+
+<body>
+  <header>Smart Irrigation System</header>
+  <div class="clock">
+    <div class="hour">
+      <div class="hr" id="hr"></div>
+    </div>
+    <div class="min">
+      <div class="mn" id="mn"></div>
+    </div>
+    <div class="sec">
+      <div class="sc" id="sc"></div>
+    </div>
+  </div>
+  <h3 class="TnD"><span id="TimeUpdate">%Last_Update%</span> <span id="Battery">%Battery%</span></h3>
+
+
+
+  <div class="Weather_forecast">
+    <div id="openweathermap-widget-1"></div>
+    <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 1, cityid: '276781', appid: 'c6d05c9173864d2613184393e59ee68f', units: 'metric', containerid: 'openweathermap-widget-1', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();</script>
+  </div>
+  <table class="T1">
+    <tr>
+      <th><img src="https://img.icons8.com/color/28/000000/thermometer.png" />Temperature</th>
+      <th><img src="https://img.icons8.com/color/28/000000/wet.png" />Humidity</th>
+      <th> <img src="https://img.icons8.com/color/28/000000/pressure.png" />Pressure</th>
+      <th><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="28" viewBox="0 0 226 226"
+          style=" fill:#000000;">
+          <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+            font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <path d="M0,226v-226h226v226z" fill="none"></path>
+            <g>
+              <path
+                d="M51.79167,98.875c-1.356,0 -2.70729,0.71096 -3.41354,2.11404l-48.37812,96.76096h103.58333l-48.37812,-96.76096c-0.70625,-1.40308 -2.05754,-2.11404 -3.41354,-2.11404zM189.30325,143.48646l-29.21992,54.26354h65.91667l-29.21992,-54.26354c-0.80042,-1.48783 -2.26942,-2.23646 -3.73842,-2.23646c-1.469,0 -2.938,0.74862 -3.73842,2.23646z"
+                fill="#90a4ae"></path>
+              <path d="M202.45833,197.75h-169.5l45.8215,-94.16667l20.09517,-28.25h37.66667l22.035,32.25208z"
+                fill="#546e7a"></path>
+              <path
+                d="M158.88742,108.29167l-12.92908,-9.41667l4.70833,32.95833l-28.25,-51.79167l-14.125,32.95833l-9.41667,-28.25l-20.09517,18.83333l20.09517,-41.29208l15.255,-31.9225c0.18833,-0.37667 0.47083,-0.70625 0.75333,-0.98875c0.80042,-0.75333 1.78917,-1.13 2.77792,-1.13c1.27125,0 2.49542,0.61208 3.20167,1.74208c0.14125,0.14125 0.18833,0.2825 0.2825,0.42375z"
+                fill="#f1c40f"></path>
+            </g>
+          </g>
+        </svg>Altitude</th>
+    </tr>
+    <tr>
+      <th><span id="temperature">%Temp%</span>&deg;C</th>
+      <th><span id="Humidity">%Hum%</span>&#37</th>
+      <th><span id="pressure">%Pressure%</span> hPa </th>
+      <th><span id="altitude">%Altitude%</span> m</th>
+    </tr>
+  </table>
+
+
+  <table class="T1" id="T2">
+    <tr>
+      <th><img src="https://img.icons8.com/ios-glyphs/30/000000/pump.png" /> Pump </th>
+      <th><img src="https://img.icons8.com/fluent/35/000000/clock.png" /> <span id="PumpTimer">Pump Time </span> </th>
+    </tr>
+    <tr>
+      <th>Status: <span id="WP">%WP%</span> </th>
+      <!-- <th><span id="time"> %Time%</span></th>  -->
+      <th>
+        <span id="Pump_Time">%PumpTime%</span>
+      </th>
+    </tr>
+  </table>
+
+  <script>
+    setInterval(updateValues, 300, "TimeUpdate");
+    setInterval(updateValues, 2000, "Battery");
+    setInterval(updateValues, 500, "temperature");
+    setInterval(updateValues, 2000, "Humidity");
+    setInterval(updateValues, 2000, "pressure");
+    setInterval(updateValues, 2000, "altitude");
+    setInterval(updateValues, 1000, "WP");
+    // setInterval(updateValues, 1000, "time");
+    setInterval(updateValues, 500, "Pump_Time");
+
+    function updateValues(value) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById(value).innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/" + value, true);
+      xhttp.send();
+    }
+  </script>
+
+  <!-- Clock Java Script -->
+  <script type="text/javascript">
+    const deg = 6;
+    const hr = document.querySelector("#hr");
+    const mn = document.querySelector("#mn");
+    const sc = document.querySelector("#sc");
+    setInterval(() => {
+      let day = new Date();
+      let hh = day.getHours() * 30;
+      let mm = day.getMinutes() * deg;
+      let ss = day.getSeconds() * deg;
+      hr.style.transform = `rotateZ(${hh + (mm / 12)}deg)`;
+      mn.style.transform = `rotateZ(${mm}deg)`;
+      sc.style.transform = `rotateZ(${ss}deg)`;
+    })
+  </script>
+</body>
+
+</html>
